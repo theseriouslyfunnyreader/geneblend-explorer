@@ -246,7 +246,7 @@ export function genotypesFor(trait: Trait): string[] {
   const syms = trait.alleles.map((a) => a.symbol);
   for (let i = 0; i < syms.length; i++) {
     for (let j = i; j < syms.length; j++) {
-      out.push(canonical(trait, syms[i], syms[j]));
+      out.push(canonical(trait, syms[i]!, syms[j]!));
     }
   }
   return out;
@@ -254,9 +254,9 @@ export function genotypesFor(trait: Trait): string[] {
 
 export function allelesOf(trait: Trait, genotype: string): [string, string] {
   if (trait.mode === "rh") {
-    return [genotype[0], genotype[1]] as [string, string];
+    return [genotype[0]!, genotype[1]!] as [string, string];
   }
-  return [genotype[0], genotype[1]] as [string, string];
+  return [genotype[0]!, genotype[1]!] as [string, string];
 }
 
 export function phenotypeOf(trait: Trait, genotype: string): string {
@@ -321,7 +321,7 @@ export function pickOutcome(outcomes: Outcome[], r: number): Outcome {
     acc += o.probability;
     if (r <= acc) return o;
   }
-  return outcomes[outcomes.length - 1];
+  return outcomes[outcomes.length - 1]!;
 }
 
 export type ParentTraits = Record<string, string>;
@@ -379,7 +379,7 @@ export function defaultParent(name: string, heightCm: number): Parent {
     name,
     heightCm,
     traits: Object.fromEntries(
-      TRAITS.map((t) => [t.id, genotypesFor(t)[t.mode === "abo" ? 1 : 1] ?? genotypesFor(t)[0]]),
+      TRAITS.map((t) => [t.id, genotypesFor(t)[1] ?? genotypesFor(t)[0]!] as [string, string]),
     ),
   };
 }
@@ -391,7 +391,7 @@ export function randomParent(name: string, rng: () => number): Parent {
     traits: Object.fromEntries(
       TRAITS.map((t) => {
         const gs = genotypesFor(t);
-        return [t.id, gs[Math.floor(rng() * gs.length)]];
+        return [t.id, gs[Math.floor(rng() * gs.length)]!] as [string, string];
       }),
     ),
   };

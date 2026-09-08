@@ -355,8 +355,8 @@ export function heightEstimate(p1: number, p2: number) {
 export function simulateChild(p1: Parent, p2: Parent, seed: number): ChildResult {
   const rng = makeRng(seed);
   const traits = TRAITS.map((trait) => {
-    const g1 = p1.traits[trait.id] ?? genotypesFor(trait)[0];
-    const g2 = p2.traits[trait.id] ?? genotypesFor(trait)[0];
+    const g1 = p1.traits[trait.id] ?? genotypesFor(trait)[0]!;
+    const g2 = p2.traits[trait.id] ?? genotypesFor(trait)[0]!;
     const { genotypeOutcomes } = cross(trait, g1, g2);
     const picked = pickOutcome(genotypeOutcomes, rng());
     return {

@@ -11,6 +11,67 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { DisclaimerBar } from "@/components/Disclaimer";
+
+const NAV = [
+  { to: "/", label: "Home" },
+  { to: "/lab", label: "The Lab" },
+  { to: "/learn", label: "Learn" },
+  { to: "/faq", label: "FAQ" },
+] as const;
+
+function SiteHeader() {
+  return (
+    <header className="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur">
+      <div className="mx-auto grid max-w-6xl grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 py-3">
+        <Link to="/" className="flex min-w-0 items-center gap-2">
+          <span className="h-3 w-3 shrink-0 rounded-full bg-primary" aria-hidden />
+          <span className="truncate font-display text-lg font-bold">GeneBlend Studio</span>
+        </Link>
+        <nav aria-label="Main" className="shrink-0">
+          <ul className="flex items-center gap-1 sm:gap-2">
+            {NAV.map((n) => (
+              <li key={n.to}>
+                <Link
+                  to={n.to}
+                  activeOptions={{ exact: n.to === "/" }}
+                  activeProps={{ className: "bg-secondary text-foreground" }}
+                  className="inline-flex min-h-11 items-center rounded-lg px-2.5 text-sm text-muted-foreground hover:bg-secondary hover:text-foreground sm:px-3"
+                >
+                  {n.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </div>
+    </header>
+  );
+}
+
+function SiteFooter() {
+  return (
+    <footer className="border-t border-border bg-card/60">
+      <div className="mx-auto max-w-6xl px-4 py-8 text-sm text-muted-foreground">
+        <p className="font-display font-semibold text-foreground">GeneBlend Studio</p>
+        <p className="mt-2 max-w-2xl">
+          An educational simulation of simplified Mendelian genetics. Results are illustrative only
+          and must not be used for medical, ancestry, parentage or diagnostic purposes. Your saved
+          samples stay in your own browser.
+        </p>
+        <ul className="mt-4 flex flex-wrap gap-4">
+          {NAV.map((n) => (
+            <li key={n.to}>
+              <Link to={n.to} className="hover:text-primary">
+                {n.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </footer>
+  );
+}
 
 function NotFoundComponent() {
   return (
@@ -77,11 +138,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "GeneBlend Studio — Interactive Genetics Simulator" },
+      {
+        name: "description",
+        content:
+          "An educational genetics simulator: build two parents, mix their DNA, and explore Punnett squares and inheritance.",
+      },
+      { name: "author", content: "GeneBlend Studio" },
+      { property: "og:title", content: "GeneBlend Studio" },
+      {
+        property: "og:description",
+        content: "Educational genetics simulation with Punnett squares and real ABO blood-type rules.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@Lovable" },
@@ -92,6 +160,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: appCss,
       },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=DM+Sans:wght@400;500;700&display=swap",
+      },
     ],
   }),
   shellComponent: RootShell,
@@ -119,8 +193,21 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <div className="flex min-h-dvh flex-col bg-background text-foreground">
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground"
+        >
+          Skip to content
+        </a>
+        <DisclaimerBar />
+        <SiteHeader />
+        <main id="main" className="flex-1">
+          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+          <Outlet />
+        </main>
+        <SiteFooter />
+      </div>
     </QueryClientProvider>
   );
 }

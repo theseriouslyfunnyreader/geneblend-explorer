@@ -341,7 +341,7 @@ export function randomParent(name: string, rng: () => number): Parent {
 }
 
 export const REALISM_LABEL: Record<Trait["realism"], string> = {
-  close: "Close to real biology",
-  simplified: "Simplified model",
-  "very-simplified": "Classroom myth / very simplified",
+  close: "Very close to real life",
+  simplified: "A simple version of real life",
+  "very-simplified": "A fun, very simple version",
 };

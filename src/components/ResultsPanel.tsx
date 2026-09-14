@@ -69,30 +69,40 @@ export function ResultsPanel({
         <dl className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {child.traits.map((t) => {
             const trait = TRAIT_MAP[t.traitId]!;
+            const swatch = PHENOTYPE_SWATCH[t.phenotype];
             return (
               <div key={t.traitId} className="rounded-xl border border-border bg-secondary/40 p-3">
                 <dt className="text-xs uppercase tracking-wide text-muted-foreground">
                   {trait.name}
                 </dt>
-                <dd className="mt-1 font-display text-base font-semibold text-foreground">
-                  {t.phenotype}
+                <dd className="mt-1 flex items-center gap-2">
+                  {swatch && (
+                    <span
+                      aria-hidden
+                      className="h-8 w-8 shrink-0 rounded-full border border-border"
+                      style={{ background: swatch }}
+                    />
+                  )}
+                  <span className="font-display text-base font-semibold text-foreground">
+                    {t.phenotype}
+                  </span>
                 </dd>
-                <dd className="mt-1 flex items-center gap-2 text-xs text-muted-foreground">
-                  <span className="rounded bg-background px-1.5 py-0.5 font-mono">{t.genotype}</span>
-                  <span>{pct(t.probability)} chance</span>
+                <dd className="mt-1 text-xs text-muted-foreground">
+                  {pct(t.probability)} chance of happening
                 </dd>
               </div>
             );
           })}
           <div className="rounded-xl border border-border bg-secondary/40 p-3">
             <dt className="text-xs uppercase tracking-wide text-muted-foreground">
-              Adult height estimate
+              How tall they might grow
             </dt>
             <dd className="mt-1 font-display text-base font-semibold">
               {child.heightRange.low}–{child.heightRange.high} cm
             </dd>
             <dd className="mt-1 text-xs text-muted-foreground">
-              Mid-parent average {child.heightRange.mid} cm; polygenic, so a wide range.
+              Kids usually end up somewhere near the middle of their parents' heights — but lots of
+              things can change that!
             </dd>
           </div>
         </dl>
@@ -100,10 +110,10 @@ export function ResultsPanel({
 
       <section aria-labelledby="details-heading" className="rounded-2xl border border-border bg-card p-6">
         <h2 id="details-heading" className="text-xl font-bold">
-          Genetic details &amp; Punnett squares
+          How each trait happened
         </h2>
         <p className="mt-1 text-sm text-muted-foreground">
-          Open a trait to see how the alleles combined and how realistic the model is.
+          Tap a trait to see the mixing chart and a simple explanation.
         </p>
         <ul className="mt-4 space-y-2">
           {child.traits.map((t) => {

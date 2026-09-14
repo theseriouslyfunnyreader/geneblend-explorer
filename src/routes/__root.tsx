@@ -12,6 +12,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { DisclaimerBar } from "@/components/Disclaimer";
+import { GeneGuide } from "@/components/GeneGuide";
 
 const NAV = [
   { to: "/", label: "Home" },
@@ -148,7 +149,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:title", content: "GeneBlend Studio" },
       {
         property: "og:description",
-        content: "Educational genetics simulation with Punnett squares and real ABO blood-type rules.",
+        content:
+          "Educational genetics simulation with Punnett squares and real ABO blood-type rules.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -207,6 +209,7 @@ function RootComponent() {
           <Outlet />
         </main>
         <SiteFooter />
+        <GeneGuide />
       </div>
     </QueryClientProvider>
   );

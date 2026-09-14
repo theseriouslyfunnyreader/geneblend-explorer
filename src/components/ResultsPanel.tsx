@@ -2,10 +2,12 @@ import { useState } from "react";
 import { PunnettSquare } from "@/components/PunnettSquare";
 import { DisclaimerCard } from "@/components/Disclaimer";
 import {
+  PHENOTYPE_SWATCH,
   REALISM_LABEL,
   TRAIT_MAP,
   TRAITS,
   genotypesFor,
+  safeGenotype,
   phenotypeOf,
   type ChildResult,
   type Parent,
@@ -68,47 +70,60 @@ export function ResultsPanel({
         <dl className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {child.traits.map((t) => {
             const trait = TRAIT_MAP[t.traitId]!;
+            const swatch = PHENOTYPE_SWATCH[t.phenotype];
             return (
               <div key={t.traitId} className="rounded-xl border border-border bg-secondary/40 p-3">
                 <dt className="text-xs uppercase tracking-wide text-muted-foreground">
                   {trait.name}
                 </dt>
-                <dd className="mt-1 font-display text-base font-semibold text-foreground">
-                  {t.phenotype}
+                <dd className="mt-1 flex items-center gap-2">
+                  {swatch && (
+                    <span
+                      aria-hidden
+                      className="h-8 w-8 shrink-0 rounded-full border border-border"
+                      style={{ background: swatch }}
+                    />
+                  )}
+                  <span className="font-display text-base font-semibold text-foreground">
+                    {t.phenotype}
+                  </span>
                 </dd>
-                <dd className="mt-1 flex items-center gap-2 text-xs text-muted-foreground">
-                  <span className="rounded bg-background px-1.5 py-0.5 font-mono">{t.genotype}</span>
-                  <span>{pct(t.probability)} chance</span>
+                <dd className="mt-1 text-xs text-muted-foreground">
+                  {pct(t.probability)} chance of happening
                 </dd>
               </div>
             );
           })}
           <div className="rounded-xl border border-border bg-secondary/40 p-3">
             <dt className="text-xs uppercase tracking-wide text-muted-foreground">
-              Adult height estimate
+              How tall they might grow
             </dt>
             <dd className="mt-1 font-display text-base font-semibold">
               {child.heightRange.low}–{child.heightRange.high} cm
             </dd>
             <dd className="mt-1 text-xs text-muted-foreground">
-              Mid-parent average {child.heightRange.mid} cm; polygenic, so a wide range.
+              Kids usually end up somewhere near the middle of their parents' heights — but lots of
+              things can change that!
             </dd>
           </div>
         </dl>
       </section>
 
-      <section aria-labelledby="details-heading" className="rounded-2xl border border-border bg-card p-6">
+      <section
+        aria-labelledby="details-heading"
+        className="rounded-2xl border border-border bg-card p-6"
+      >
         <h2 id="details-heading" className="text-xl font-bold">
-          Genetic details &amp; Punnett squares
+          How each trait happened
         </h2>
         <p className="mt-1 text-sm text-muted-foreground">
-          Open a trait to see how the alleles combined and how realistic the model is.
+          Tap a trait to see the mixing chart and a simple explanation.
         </p>
         <ul className="mt-4 space-y-2">
           {child.traits.map((t) => {
             const trait = TRAIT_MAP[t.traitId]!;
-            const g1 = p1.traits[trait.id] ?? genotypesFor(trait)[0]!;
-            const g2 = p2.traits[trait.id] ?? genotypesFor(trait)[0]!;
+            const g1 = safeGenotype(trait, p1.traits[trait.id]);
+            const g2 = safeGenotype(trait, p2.traits[trait.id]);
             const isOpen = open === t.traitId;
             return (
               <li key={t.traitId} className="rounded-xl border border-border">
@@ -141,7 +156,8 @@ export function ResultsPanel({
                             {REALISM_LABEL[trait.realism]}
                           </span>
                         </p>
-                        <p className="text-muted-foreground">{trait.note}</p>
+                        <p>{trait.kidNote}</p>
+                        <p className="text-xs text-muted-foreground">{trait.note}</p>
                         <div>
                           <p className="font-semibold">Possible outcomes</p>
                           <ul className="mt-1 space-y-1">
@@ -170,7 +186,10 @@ export function ResultsPanel({
         </ul>
       </section>
 
-      <section aria-labelledby="compare-heading" className="rounded-2xl border border-border bg-card p-6">
+      <section
+        aria-labelledby="compare-heading"
+        className="rounded-2xl border border-border bg-card p-6"
+      >
         <h2 id="compare-heading" className="text-xl font-bold">
           Side-by-side comparison
         </h2>
@@ -178,27 +197,41 @@ export function ResultsPanel({
           <table className="w-full min-w-[520px] text-left text-sm">
             <thead>
               <tr className="border-b border-border text-xs uppercase tracking-wide text-muted-foreground">
-                <th scope="col" className="py-2 pr-3">Trait</th>
-                <th scope="col" className="py-2 pr-3">{p1.name || "Parent 1"}</th>
-                <th scope="col" className="py-2 pr-3">{p2.name || "Parent 2"}</th>
-                <th scope="col" className="py-2">{childName || "Child"}</th>
+                <th scope="col" className="py-2 pr-3">
+                  Trait
+                </th>
+                <th scope="col" className="py-2 pr-3">
+                  {p1.name || "Parent 1"}
+                </th>
+                <th scope="col" className="py-2 pr-3">
+                  {p2.name || "Parent 2"}
+                </th>
+                <th scope="col" className="py-2">
+                  {childName || "Child"}
+                </th>
               </tr>
             </thead>
             <tbody>
               {TRAITS.map((trait) => {
-                const g1 = p1.traits[trait.id] ?? genotypesFor(trait)[0]!;
-                const g2 = p2.traits[trait.id] ?? genotypesFor(trait)[0]!;
+                const g1 = safeGenotype(trait, p1.traits[trait.id]);
+                const g2 = safeGenotype(trait, p2.traits[trait.id]);
                 const c = child.traits.find((t) => t.traitId === trait.id)!;
                 const matches1 = phenotypeOf(trait, g1) === c.phenotype;
                 const matches2 = phenotypeOf(trait, g2) === c.phenotype;
                 return (
                   <tr key={trait.id} className="border-b border-border/60">
-                    <th scope="row" className="py-2 pr-3 font-medium">{trait.name}</th>
-                    <td className={`py-2 pr-3 ${matches1 ? "text-primary" : "text-muted-foreground"}`}>
+                    <th scope="row" className="py-2 pr-3 font-medium">
+                      {trait.name}
+                    </th>
+                    <td
+                      className={`py-2 pr-3 ${matches1 ? "text-primary" : "text-muted-foreground"}`}
+                    >
                       {phenotypeOf(trait, g1)}
                       {matches1 && <span className="sr-only"> (matches child)</span>}
                     </td>
-                    <td className={`py-2 pr-3 ${matches2 ? "text-primary" : "text-muted-foreground"}`}>
+                    <td
+                      className={`py-2 pr-3 ${matches2 ? "text-primary" : "text-muted-foreground"}`}
+                    >
                       {phenotypeOf(trait, g2)}
                       {matches2 && <span className="sr-only"> (matches child)</span>}
                     </td>
@@ -207,7 +240,9 @@ export function ResultsPanel({
                 );
               })}
               <tr>
-                <th scope="row" className="py-2 pr-3 font-medium">Height</th>
+                <th scope="row" className="py-2 pr-3 font-medium">
+                  Height
+                </th>
                 <td className="py-2 pr-3 text-muted-foreground">{p1.heightCm} cm</td>
                 <td className="py-2 pr-3 text-muted-foreground">{p2.heightCm} cm</td>
                 <td className="py-2 font-semibold">

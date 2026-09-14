@@ -128,8 +128,8 @@ function LabPage() {
         <div className="min-w-0">
           <h1 className="text-3xl font-bold sm:text-4xl">The Lab</h1>
           <p className="mt-2 max-w-xl text-sm text-muted-foreground">
-            Pick each parent's genotype for every trait, then mix. Every result is explained with a
-            Punnett square and a note on how real the model is.
+            Choose what each pretend parent looks like, then press Mix the DNA. We'll show you what
+            the child might look like — and explain why in easy words.
           </p>
         </div>
         <div className="flex shrink-0 flex-wrap gap-2">

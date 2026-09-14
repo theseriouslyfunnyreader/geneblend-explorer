@@ -177,9 +177,7 @@ export const PHENOTYPE_SWATCH: Record<string, string> = {
   "Blue eyes": "#4f9bd9",
 };
 
-export const TRAIT_MAP: Record<string, Trait> = Object.fromEntries(
-  TRAITS.map((t) => [t.id, t]),
-);
+export const TRAIT_MAP: Record<string, Trait> = Object.fromEntries(TRAITS.map((t) => [t.id, t]));
 
 /** Canonical ordering of a genotype pair, using allele dominance order. */
 export function canonical(trait: Trait, a: string, b: string): string {

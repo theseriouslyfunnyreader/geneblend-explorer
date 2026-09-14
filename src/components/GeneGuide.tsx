@@ -62,7 +62,9 @@ export function GeneGuide() {
         className="fixed bottom-5 right-5 z-50 flex h-16 w-16 items-center justify-center rounded-full bg-primary text-3xl text-primary-foreground shadow-lg transition hover:scale-105"
       >
         <span aria-hidden>{open ? "✕" : "🧬"}</span>
-        <span className="sr-only">{open ? "Close Gina the gene guide" : "Ask Gina the gene guide"}</span>
+        <span className="sr-only">
+          {open ? "Close Gina the gene guide" : "Ask Gina the gene guide"}
+        </span>
       </button>
 
       {open && (
@@ -92,7 +94,9 @@ export function GeneGuide() {
                 <p className="ml-auto w-fit max-w-[85%] rounded-2xl rounded-br-sm bg-primary px-3 py-2 text-primary-foreground">
                   {qa.q}
                 </p>
-                <p className="w-fit max-w-[90%] rounded-2xl rounded-tl-sm bg-secondary p-3">{qa.a}</p>
+                <p className="w-fit max-w-[90%] rounded-2xl rounded-tl-sm bg-secondary p-3">
+                  {qa.a}
+                </p>
               </div>
             ))}
             {remaining.length === 0 && (

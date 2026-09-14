@@ -149,7 +149,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:title", content: "GeneBlend Studio" },
       {
         property: "og:description",
-        content: "Educational genetics simulation with Punnett squares and real ABO blood-type rules.",
+        content:
+          "Educational genetics simulation with Punnett squares and real ABO blood-type rules.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

@@ -109,7 +109,10 @@ export function ResultsPanel({
         </dl>
       </section>
 
-      <section aria-labelledby="details-heading" className="rounded-2xl border border-border bg-card p-6">
+      <section
+        aria-labelledby="details-heading"
+        className="rounded-2xl border border-border bg-card p-6"
+      >
         <h2 id="details-heading" className="text-xl font-bold">
           How each trait happened
         </h2>
@@ -183,7 +186,10 @@ export function ResultsPanel({
         </ul>
       </section>
 
-      <section aria-labelledby="compare-heading" className="rounded-2xl border border-border bg-card p-6">
+      <section
+        aria-labelledby="compare-heading"
+        className="rounded-2xl border border-border bg-card p-6"
+      >
         <h2 id="compare-heading" className="text-xl font-bold">
           Side-by-side comparison
         </h2>
@@ -191,10 +197,18 @@ export function ResultsPanel({
           <table className="w-full min-w-[520px] text-left text-sm">
             <thead>
               <tr className="border-b border-border text-xs uppercase tracking-wide text-muted-foreground">
-                <th scope="col" className="py-2 pr-3">Trait</th>
-                <th scope="col" className="py-2 pr-3">{p1.name || "Parent 1"}</th>
-                <th scope="col" className="py-2 pr-3">{p2.name || "Parent 2"}</th>
-                <th scope="col" className="py-2">{childName || "Child"}</th>
+                <th scope="col" className="py-2 pr-3">
+                  Trait
+                </th>
+                <th scope="col" className="py-2 pr-3">
+                  {p1.name || "Parent 1"}
+                </th>
+                <th scope="col" className="py-2 pr-3">
+                  {p2.name || "Parent 2"}
+                </th>
+                <th scope="col" className="py-2">
+                  {childName || "Child"}
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -206,12 +220,18 @@ export function ResultsPanel({
                 const matches2 = phenotypeOf(trait, g2) === c.phenotype;
                 return (
                   <tr key={trait.id} className="border-b border-border/60">
-                    <th scope="row" className="py-2 pr-3 font-medium">{trait.name}</th>
-                    <td className={`py-2 pr-3 ${matches1 ? "text-primary" : "text-muted-foreground"}`}>
+                    <th scope="row" className="py-2 pr-3 font-medium">
+                      {trait.name}
+                    </th>
+                    <td
+                      className={`py-2 pr-3 ${matches1 ? "text-primary" : "text-muted-foreground"}`}
+                    >
                       {phenotypeOf(trait, g1)}
                       {matches1 && <span className="sr-only"> (matches child)</span>}
                     </td>
-                    <td className={`py-2 pr-3 ${matches2 ? "text-primary" : "text-muted-foreground"}`}>
+                    <td
+                      className={`py-2 pr-3 ${matches2 ? "text-primary" : "text-muted-foreground"}`}
+                    >
                       {phenotypeOf(trait, g2)}
                       {matches2 && <span className="sr-only"> (matches child)</span>}
                     </td>
@@ -220,7 +240,9 @@ export function ResultsPanel({
                 );
               })}
               <tr>
-                <th scope="row" className="py-2 pr-3 font-medium">Height</th>
+                <th scope="row" className="py-2 pr-3 font-medium">
+                  Height
+                </th>
                 <td className="py-2 pr-3 text-muted-foreground">{p1.heightCm} cm</td>
                 <td className="py-2 pr-3 text-muted-foreground">{p2.heightCm} cm</td>
                 <td className="py-2 font-semibold">

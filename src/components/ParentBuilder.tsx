@@ -51,7 +51,10 @@ export function ParentBuilder({
 
       <div className="mt-4 grid gap-4 sm:grid-cols-2">
         <div>
-          <label htmlFor={`${idBase}-name`} className="block text-xs font-medium text-muted-foreground">
+          <label
+            htmlFor={`${idBase}-name`}
+            className="block text-xs font-medium text-muted-foreground"
+          >
             Display name
           </label>
           <input
@@ -64,7 +67,10 @@ export function ParentBuilder({
           />
         </div>
         <div>
-          <label htmlFor={`${idBase}-height`} className="block text-xs font-medium text-muted-foreground">
+          <label
+            htmlFor={`${idBase}-height`}
+            className="block text-xs font-medium text-muted-foreground"
+          >
             Height: {parent.heightCm} cm
           </label>
           <input

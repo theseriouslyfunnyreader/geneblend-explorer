@@ -6,12 +6,12 @@
  * modelled close to real single-locus inheritance.
  */
 
-export type InheritanceMode = "dominant" | "incomplete" | "abo" | "rh";
+export type InheritanceMode = "dominant" | "incomplete" | "abo" | "hair";
 
 export interface Trait {
   id: string;
   name: string;
-  category: "Face" | "Hair & Eyes" | "Body" | "Blood" | "Senses";
+  category: "Face" | "Hair & Eyes" | "Fun Lab";
   mode: InheritanceMode;
   /** Ordered most-dominant first. */
   alleles: { symbol: string; name: string }[];
@@ -19,6 +19,8 @@ export interface Trait {
   phenotypes: Record<string, string>;
   realism: "close" | "simplified" | "very-simplified";
   note: string;
+  /** Kid-friendly one-liner shown everywhere in the lab. */
+  kidNote: string;
 }
 
 const dom = (
@@ -33,6 +35,7 @@ const dom = (
   recPheno: string,
   realism: Trait["realism"],
   note: string,
+  kidNote: string,
 ): Trait => ({
   id,
   name,
@@ -49,6 +52,7 @@ const dom = (
   },
   realism,
   note,
+  kidNote,
 });
 
 export const TRAITS: Trait[] = [
@@ -58,77 +62,70 @@ export const TRAITS: Trait[] = [
     "Hair & Eyes",
     "B",
     "b",
-    "brown-pigment allele",
-    "low-pigment allele",
+    "brown (strong)",
+    "blue (hidden)",
     "Brown eyes",
     "Blue eyes",
     "very-simplified",
-    "Real eye colour involves at least 16 genes (OCA2 and HERC2 are the largest contributors). The one-gene model here is a classroom shortcut, which is why green and hazel eyes are missing.",
+    "Real eye colour involves many genes, so green and hazel eyes are missing from this model.",
+    "Brown is a strong trait, blue is a hidden one. A child needs two hidden blue instructions to get blue eyes.",
   ),
+  {
+    id: "hairColor",
+    name: "Hair colour",
+    category: "Hair & Eyes",
+    mode: "hair",
+    alleles: [
+      { symbol: "K", name: "black (strongest)" },
+      { symbol: "N", name: "brown" },
+      { symbol: "R", name: "red / ginger" },
+      { symbol: "b", name: "blonde (most hidden)" },
+    ],
+    phenotypes: {
+      KK: "Black",
+      KN: "Black",
+      KR: "Black",
+      Kb: "Black",
+      NN: "Dark brown",
+      NR: "Light brown",
+      Nb: "Dark brown",
+      RR: "Red / ginger",
+      Rb: "Red / ginger",
+      bb: "Blonde",
+    },
+    realism: "very-simplified",
+    note: "Hair colour really comes from many genes working together. This five-colour model is a friendly teaching version.",
+    kidNote:
+      "Think of dark hair colours as louder and light ones as quieter. Black shouts loudest, then brown, then red, and blonde is the quietest of all.",
+  },
   {
     id: "hairTexture",
     name: "Hair texture",
     category: "Hair & Eyes",
     mode: "incomplete",
     alleles: [
-      { symbol: "C", name: "curl allele" },
-      { symbol: "s", name: "straight allele" },
+      { symbol: "C", name: "curly instruction" },
+      { symbol: "s", name: "straight instruction" },
     ],
     phenotypes: { CC: "Curly hair", Cs: "Wavy hair", ss: "Straight hair" },
     realism: "simplified",
-    note: "A genuine example of blended (incomplete dominant) inheritance: one copy of each allele gives wavy hair rather than one parent's texture winning outright.",
+    note: "A nice example of blending: one curly plus one straight gives wavy hair instead of one winning.",
+    kidNote:
+      "Here the two instructions share! Curly + straight makes wavy — like mixing two paints instead of picking one.",
   },
-  dom(
-    "hairColor",
-    "Hair colour",
-    "Hair & Eyes",
-    "H",
-    "h",
-    "dark-pigment allele",
-    "light-pigment allele",
-    "Dark hair",
-    "Light hair",
-    "very-simplified",
-    "Hair colour is polygenic; MC1R alone explains most red hair, and pigment often darkens with age. Treat this as a two-outcome teaching toy.",
-  ),
-  dom(
-    "widowsPeak",
-    "Widow's peak",
-    "Face",
-    "W",
-    "w",
-    "peak allele",
-    "straight-hairline allele",
-    "Widow's peak",
-    "Straight hairline",
-    "simplified",
-    "Frequently taught as a single dominant gene, though family studies show the hairline is continuous rather than two neat categories.",
-  ),
   dom(
     "dimples",
     "Cheek dimples",
     "Face",
     "D",
     "d",
-    "dimple allele",
-    "no-dimple allele",
+    "dimple (strong)",
+    "no dimple (hidden)",
     "Dimples",
     "No dimples",
     "simplified",
-    "Dimples come from a variation in the zygomaticus major muscle. Inheritance is irregular, so the clean dominant model is an approximation.",
-  ),
-  dom(
-    "cleftChin",
-    "Cleft chin",
-    "Face",
-    "K",
-    "k",
-    "cleft allele",
-    "smooth allele",
-    "Cleft chin",
-    "Smooth chin",
-    "simplified",
-    "Strongly heritable but not a tidy on/off switch — chin shape varies continuously.",
+    "Dimples come from a small difference in a cheek muscle; real inheritance is a bit messier than this.",
+    "Dimples are the strong trait — one dimple instruction is enough for those little smile dents.",
   ),
   dom(
     "freckles",
@@ -136,74 +133,23 @@ export const TRAITS: Trait[] = [
     "Face",
     "F",
     "f",
-    "freckle allele",
-    "no-freckle allele",
+    "freckles (strong)",
+    "no freckles (hidden)",
     "Freckles",
     "No freckles",
     "simplified",
-    "Linked mostly to MC1R variants and strongly modified by sun exposure — an environment-sensitive trait.",
-  ),
-  dom(
-    "earlobes",
-    "Earlobes",
-    "Face",
-    "E",
-    "e",
-    "free-lobe allele",
-    "attached-lobe allele",
-    "Free earlobes",
-    "Attached earlobes",
-    "very-simplified",
-    "The classic textbook example — and a known myth. A 2017 genome study found at least 49 regions involved.",
-  ),
-  dom(
-    "tongueRoll",
-    "Tongue rolling",
-    "Senses",
-    "R",
-    "r",
-    "roller allele",
-    "non-roller allele",
-    "Can roll tongue",
-    "Cannot roll tongue",
-    "very-simplified",
-    "Identical twins often differ on this, so it cannot be a simple single gene. Included because it is such a common classroom demo.",
-  ),
-  dom(
-    "ptc",
-    "PTC bitter tasting",
-    "Senses",
-    "T",
-    "t",
-    "taster allele",
-    "non-taster allele",
-    "Tastes bitter (PTC)",
-    "Tastes nothing",
-    "close",
-    "The TAS2R38 gene really does drive most of this, though tasting is a spectrum rather than yes/no.",
-  ),
-  dom(
-    "hitchhiker",
-    "Hitchhiker's thumb",
-    "Body",
-    "S",
-    "s",
-    "straight-thumb allele",
-    "hitchhiker allele",
-    "Straight thumb",
-    "Hitchhiker's thumb",
-    "simplified",
-    "Thumb hyperextension is measured in degrees, so the two-bucket version is a simplification.",
+    "Freckles are linked to skin-pigment genes and get stronger with sunshine.",
+    "Freckles are a strong trait, and sunshine can make them show up even more!",
   ),
   {
     id: "blood",
-    name: "ABO blood type",
-    category: "Blood",
+    name: "Blood type (fun lab)",
+    category: "Fun Lab",
     mode: "abo",
     alleles: [
-      { symbol: "A", name: "Iᴬ allele" },
-      { symbol: "B", name: "Iᴮ allele" },
-      { symbol: "O", name: "i allele" },
+      { symbol: "A", name: "A instruction" },
+      { symbol: "B", name: "B instruction" },
+      { symbol: "O", name: "O instruction (hidden)" },
     ],
     phenotypes: {
       AA: "Type A",
@@ -214,22 +160,22 @@ export const TRAITS: Trait[] = [
       OO: "Type O",
     },
     realism: "close",
-    note: "Accurate: Iᴬ and Iᴮ are codominant with each other and both dominant over i. An AB parent and an O parent can only have A or B children — never AB or O.",
-  },
-  {
-    id: "rh",
-    name: "Rh factor",
-    category: "Blood",
-    mode: "rh",
-    alleles: [
-      { symbol: "+", name: "Rh-positive allele" },
-      { symbol: "-", name: "Rh-negative allele" },
-    ],
-    phenotypes: { "++": "Rh positive", "+-": "Rh positive", "--": "Rh negative" },
-    realism: "close",
-    note: "The RHD gene behaves like a clean dominant: two negative alleles are needed for Rh-negative blood.",
+    note: "A and B are both strong and can show up together as AB; O is hidden and needs two copies.",
+    kidNote:
+      "Blood comes in four flavours: A, B, AB and O. A and B are both strong and can team up as AB. O is shy and only shows when it gets two copies.",
   },
 ];
+
+/** Colour swatches so young learners can see a trait, not just read it. */
+export const PHENOTYPE_SWATCH: Record<string, string> = {
+  Black: "#1b1512",
+  "Dark brown": "#4a2c17",
+  "Light brown": "#a4703a",
+  "Red / ginger": "#d1541d",
+  Blonde: "#e8c56a",
+  "Brown eyes": "#6b4226",
+  "Blue eyes": "#4f9bd9",
+};
 
 export const TRAIT_MAP: Record<string, Trait> = Object.fromEntries(
   TRAITS.map((t) => [t.id, t]),

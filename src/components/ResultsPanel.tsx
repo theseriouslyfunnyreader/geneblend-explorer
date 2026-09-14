@@ -152,7 +152,8 @@ export function ResultsPanel({
                             {REALISM_LABEL[trait.realism]}
                           </span>
                         </p>
-                        <p className="text-muted-foreground">{trait.note}</p>
+                        <p>{trait.kidNote}</p>
+                        <p className="text-xs text-muted-foreground">{trait.note}</p>
                         <div>
                           <p className="font-semibold">Possible outcomes</p>
                           <ul className="mt-1 space-y-1">

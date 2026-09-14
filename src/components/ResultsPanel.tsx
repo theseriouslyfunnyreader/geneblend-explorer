@@ -7,6 +7,7 @@ import {
   TRAIT_MAP,
   TRAITS,
   genotypesFor,
+  safeGenotype,
   phenotypeOf,
   type ChildResult,
   type Parent,
@@ -118,8 +119,8 @@ export function ResultsPanel({
         <ul className="mt-4 space-y-2">
           {child.traits.map((t) => {
             const trait = TRAIT_MAP[t.traitId]!;
-            const g1 = p1.traits[trait.id] ?? genotypesFor(trait)[0]!;
-            const g2 = p2.traits[trait.id] ?? genotypesFor(trait)[0]!;
+            const g1 = safeGenotype(trait, p1.traits[trait.id]);
+            const g2 = safeGenotype(trait, p2.traits[trait.id]);
             const isOpen = open === t.traitId;
             return (
               <li key={t.traitId} className="rounded-xl border border-border">
@@ -198,8 +199,8 @@ export function ResultsPanel({
             </thead>
             <tbody>
               {TRAITS.map((trait) => {
-                const g1 = p1.traits[trait.id] ?? genotypesFor(trait)[0]!;
-                const g2 = p2.traits[trait.id] ?? genotypesFor(trait)[0]!;
+                const g1 = safeGenotype(trait, p1.traits[trait.id]);
+                const g2 = safeGenotype(trait, p2.traits[trait.id]);
                 const c = child.traits.find((t) => t.traitId === trait.id)!;
                 const matches1 = phenotypeOf(trait, g1) === c.phenotype;
                 const matches2 = phenotypeOf(trait, g2) === c.phenotype;

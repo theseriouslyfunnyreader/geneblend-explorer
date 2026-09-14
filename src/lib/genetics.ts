@@ -202,6 +202,12 @@ export function allelesOf(_trait: Trait, genotype: string): [string, string] {
   return [genotype[0]!, genotype[1]!] as [string, string];
 }
 
+/** Falls back to a valid genotype when old saved data uses a removed allele. */
+export function safeGenotype(trait: Trait, value: string | undefined): string {
+  const all = genotypesFor(trait);
+  return value && all.includes(value) ? value : all[0]!;
+}
+
 export function phenotypeOf(trait: Trait, genotype: string): string {
   return trait.phenotypes[genotype] ?? "Unknown";
 }
@@ -298,8 +304,8 @@ export function heightEstimate(p1: number, p2: number) {
 export function simulateChild(p1: Parent, p2: Parent, seed: number): ChildResult {
   const rng = makeRng(seed);
   const traits = TRAITS.map((trait) => {
-    const g1 = p1.traits[trait.id] ?? genotypesFor(trait)[0]!;
-    const g2 = p2.traits[trait.id] ?? genotypesFor(trait)[0]!;
+    const g1 = safeGenotype(trait, p1.traits[trait.id]);
+    const g2 = safeGenotype(trait, p2.traits[trait.id]);
     const { genotypeOutcomes } = cross(trait, g1, g2);
     const picked = pickOutcome(genotypeOutcomes, rng());
     return {

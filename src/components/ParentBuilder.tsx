@@ -2,6 +2,7 @@ import {
   PHENOTYPE_SWATCH,
   TRAITS,
   genotypesFor,
+  safeGenotype,
   phenotypeOf,
   type Parent,
   type Trait,
@@ -86,7 +87,7 @@ export function ParentBuilder({
           <div className="grid gap-3 sm:grid-cols-2">
             {TRAITS.filter((t) => t.category === cat).map((trait) => {
               const id = `${idBase}-${trait.id}`;
-              const value = parent.traits[trait.id] ?? genotypesFor(trait)[0]!;
+              const value = safeGenotype(trait, parent.traits[trait.id]);
               const pheno = phenotypeOf(trait, value);
               const swatch = PHENOTYPE_SWATCH[pheno];
               return (

@@ -1,4 +1,5 @@
 import {
+  PHENOTYPE_SWATCH,
   TRAITS,
   genotypesFor,
   phenotypeOf,
@@ -6,7 +7,7 @@ import {
   type Trait,
 } from "@/lib/genetics";
 
-const CATEGORIES: Trait["category"][] = ["Hair & Eyes", "Face", "Senses", "Body", "Blood"];
+const CATEGORIES: Trait["category"][] = ["Hair & Eyes", "Face", "Fun Lab"];
 
 export function ParentBuilder({
   parent,

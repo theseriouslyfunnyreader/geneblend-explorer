@@ -2,6 +2,7 @@ import { useState } from "react";
 import { PunnettSquare } from "@/components/PunnettSquare";
 import { DisclaimerCard } from "@/components/Disclaimer";
 import {
+  PHENOTYPE_SWATCH,
   REALISM_LABEL,
   TRAIT_MAP,
   TRAITS,

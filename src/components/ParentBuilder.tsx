@@ -87,28 +87,42 @@ export function ParentBuilder({
             {TRAITS.filter((t) => t.category === cat).map((trait) => {
               const id = `${idBase}-${trait.id}`;
               const value = parent.traits[trait.id] ?? genotypesFor(trait)[0]!;
+              const pheno = phenotypeOf(trait, value);
+              const swatch = PHENOTYPE_SWATCH[pheno];
               return (
                 <div key={trait.id} className="min-w-0">
                   <label htmlFor={id} className="block text-xs text-muted-foreground">
                     {trait.name}
                   </label>
-                  <select
-                    id={id}
-                    value={value}
-                    onChange={(e) =>
-                      onChange({
-                        ...parent,
-                        traits: { ...parent.traits, [trait.id]: e.target.value },
-                      })
-                    }
-                    className="mt-1 w-full rounded-lg border border-input bg-background px-3 py-2.5 text-sm text-foreground"
-                  >
-                    {genotypesFor(trait).map((g) => (
-                      <option key={g} value={g}>
-                        {phenotypeOf(trait, g)} ({g})
-                      </option>
-                    ))}
-                  </select>
+                  <div className="mt-1 flex items-center gap-2">
+                    {swatch && (
+                      <span
+                        aria-hidden
+                        className="h-7 w-7 shrink-0 rounded-full border border-border"
+                        style={{ background: swatch }}
+                      />
+                    )}
+                    <select
+                      id={id}
+                      value={value}
+                      onChange={(e) =>
+                        onChange({
+                          ...parent,
+                          traits: { ...parent.traits, [trait.id]: e.target.value },
+                        })
+                      }
+                      className="w-full rounded-lg border border-input bg-background px-3 py-2.5 text-sm text-foreground"
+                    >
+                      {genotypesFor(trait).map((g) => (
+                        <option key={g} value={g}>
+                          {phenotypeOf(trait, g)}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <p className="mt-1 text-[11px] leading-snug text-muted-foreground">
+                    {trait.kidNote}
+                  </p>
                 </div>
               );
             })}

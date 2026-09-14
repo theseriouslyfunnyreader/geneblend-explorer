@@ -198,10 +198,7 @@ export function genotypesFor(trait: Trait): string[] {
   return out;
 }
 
-export function allelesOf(trait: Trait, genotype: string): [string, string] {
-  if (trait.mode === "rh") {
-    return [genotype[0]!, genotype[1]!] as [string, string];
-  }
+export function allelesOf(_trait: Trait, genotype: string): [string, string] {
   return [genotype[0]!, genotype[1]!] as [string, string];
 }
 

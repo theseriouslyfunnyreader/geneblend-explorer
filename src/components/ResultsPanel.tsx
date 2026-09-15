@@ -257,6 +257,16 @@ export function ResultsPanel({
         </p>
       </section>
 
+      <div className="rounded-2xl border border-primary/40 bg-primary/10 p-5 text-center">
+        <p className="font-display font-semibold">Think you've got genetics figured out? 🧠</p>
+        <a
+          href="/quiz"
+          className="mt-3 inline-flex min-h-11 items-center rounded-xl bg-primary px-6 font-display font-semibold text-primary-foreground hover:opacity-90"
+        >
+          Take the Genetics Quiz 🧬
+        </a>
+      </div>
+
       <DisclaimerCard />
     </div>
   );

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "@tanstack/react-router";
 import { PunnettSquare } from "@/components/PunnettSquare";
 import { DisclaimerCard } from "@/components/Disclaimer";
 import {

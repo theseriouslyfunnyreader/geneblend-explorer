@@ -79,6 +79,12 @@ function Landing() {
             >
               Learn the basics
             </Link>
+            <Link
+              to="/quiz"
+              className="inline-flex min-h-12 items-center rounded-xl border border-primary/50 bg-primary/10 px-6 text-base font-semibold text-primary hover:bg-primary/20"
+            >
+              Take the quiz 🧬
+            </Link>
           </div>
           <p className="mt-6 text-xs text-muted-foreground">
             No account, no data leaves your device, no real DNA involved.

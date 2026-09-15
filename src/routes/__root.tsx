@@ -13,6 +13,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { DisclaimerBar } from "@/components/Disclaimer";
 import { GeneGuide } from "@/components/GeneGuide";
+import { AmbientBackground } from "@/components/AmbientBackground";
 
 const NAV = [
   { to: "/", label: "Home" },

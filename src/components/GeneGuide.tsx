@@ -7,28 +7,36 @@ interface QA {
 
 const QUESTIONS: QA[] = [
   {
-    q: "Why do I have a different eye colour than my parents?",
-    a: "🧬 Everyone carries two instructions for eye colour — one from each parent. Some instructions are loud and some are quiet. Your parents might each be carrying a quiet blue instruction hidden behind their brown eyes, and you got both quiet ones. Surprise! 👀",
+    q: "What is DNA and what does it look like?",
+    a: "🧬 DNA is like a giant recipe book tucked inside every tiny piece of you! It looks like a twisty ladder — scientists call it a double helix. 🪜 Each gene is one recipe in the book, like 'how to make curly hair' or 'what colour to paint the eyes'. You got half your recipe book from mom and half from dad! 📖",
   },
   {
-    q: "What is a gene or DNA?",
-    a: "📖 DNA is like a giant recipe book inside every tiny piece of you. A gene is one recipe in that book — like 'how to make curly hair' or 'what colour to paint the eyes'. You got half your recipe book from each parent! 🥣",
+    q: "Why do I look like my mom or dad?",
+    a: "👨‍👩‍👧 Because your recipe book is half theirs! When you were made, mom and dad each handed over half of their recipes, and yours got shuffled together like mixing two decks of cards 🃏. That's why you might have dad's smile, mom's eyes, or a little mix of both! 💛",
   },
   {
-    q: "What does dominant mean?",
-    a: "📣 A dominant trait is a STRONG trait — it only needs to show up once to be heard, like a friend shouting. A recessive trait is a HIDDEN trait — it whispers, so you need two whispers together before anyone notices. 🤫",
+    q: "Can two brown-eyed parents have a blue-eyed kid?",
+    a: "👀 Yes, surprise! Brown is a LOUD trait — it shouts over quiet blue. Your parents might each be carrying a secret quiet blue instruction hidden behind their brown eyes. If you happened to get both quiet ones… blue eyes! 🔵 It's like both parents hiding a blue marble in their pocket — 1-in-4 chance it becomes yours! 🎲",
   },
   {
-    q: "Can two brown-eyed parents have a blue-eyed child?",
-    a: "✅ Yes! If both parents secretly carry a hidden blue instruction, there's a 1-in-4 chance their child gets both hidden ones and ends up with blue eyes. It's a bit like both parents having a blue marble in their pocket. 🔵",
+    q: "What is a 'strong' vs 'hidden' trait (dominant and recessive)?",
+    a: "📣 A STRONG trait (scientists say 'dominant') only needs to show up once to be heard — like a friend shouting. A HIDDEN trait (that's 'recessive') whispers 🤫, so you need two whispers together before anyone notices. Shout beats whisper every time — that's why some traits love to show off! 💪",
   },
   {
-    q: "Is this how real babies are made?",
-    a: "🧪 Not quite! This is a pretend science game. Real people are made from thousands of genes mixing together, plus lots of other things. This lab only shows a few simple ones so the idea is easy to see. 💛",
+    q: "Where did my red hair or curly hair come from if my parents don't have it?",
+    a: "🦰 Secret recipes! Red hair is a whisper trait — it can hide quietly inside your parents' recipe books without showing. If you got TWO whisper copies, one from each parent, the red hair finally gets its moment to shine! ✨ Same with curls — sometimes a surprise trait skips a generation and pops up in you! 🌀",
   },
   {
-    q: "Why are my hair and my sister's hair different?",
-    a: "🎲 Every time instructions get mixed, it's like shaking dice. Brothers and sisters get different mixes from the same two parents — that's why families look alike but never exactly the same! 👧🧒",
+    q: "Why do siblings look different from each other?",
+    a: "🎲 Every time recipes get mixed, it's like rolling dice — mom and dad each shuffle a different half for every kid! That's why you and your sister or brother got different mixes from the very same two parents. Families look alike, but never exactly the same — that's what makes you, YOU! 👧🧒",
+  },
+  {
+    q: "What are freckles and dimples, and how do we get them?",
+    a: "☀️ Freckles are little dots of extra colour that show up when your skin meets sunshine — and there's a STRONG trait that makes them more likely! 😊 Dimples are tiny dents in your cheeks made by the way your smile muscles are built. Both are recipes you inherited — so if mom or dad has them, you might too! ✨",
+  },
+  {
+    q: "Can this simulator tell me what my real future baby will look like?",
+    a: "🔮 Not quite! This is a pretend science lab — a fun game that shows how traits MIGHT mix. Real people are made from thousands of genes (plus lots of other things!), way more than this lab can show. Think of it as practising with toy dice — the real thing is even more amazing! 💛",
   },
 ];
 
